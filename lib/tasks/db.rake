@@ -1,7 +1,21 @@
+require 'csv'
 namespace :db do
-  desc 'Load example data from db/examples.rb'
-  task examples: :environment do
-    require_relative '../../db/examples'
+  # desc 'Load example data from db/examples.rb'
+  # task examples: :environment do
+  #   require_relative '../../db/examples'
+  # end
+  namespace :example do
+    desc 'Fill the pokemon table with example data'
+    task pokemon: :environment do
+      Pokemon.transaction do
+        CSV.foreach(Rails.root + "data/pokemon_gen1_gen2.csv",
+            headers: true) do |pokemon_row|
+          pokemon = pokemon_row.to_hash
+          next if Pokemon.exists? pokemon
+          Pokemon.create!(pokemon)
+        end
+      end
+    end
   end
 
   unless Rails.env == 'production'
