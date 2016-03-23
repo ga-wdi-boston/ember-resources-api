@@ -39,7 +39,7 @@ module EmberResourcesApi
         resource '*',
                  headers: :any,
                  methods: [:options, :get,
-                           :post, :patch, :delete]
+                           :post, :patch, :put, :delete]
       end
     end
   end
