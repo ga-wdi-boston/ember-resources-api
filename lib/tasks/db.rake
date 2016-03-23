@@ -5,6 +5,9 @@ namespace :db do
   #   require_relative '../../db/examples'
   # end
   namespace :example do
+    desc 'Fill all tables with example data'
+    task all: [:pokemon, :items]
+
     desc 'Fill the pokemon table with example data'
     task pokemon: :environment do
       Pokemon.transaction do
@@ -16,7 +19,19 @@ namespace :db do
         end
       end
     end
+    desc 'Fill the items table with example data'
+    task items: :environment do
+      Item.transaction do
+        CSV.foreach(Rails.root + "data/items.csv",
+            headers: true) do |item_row|
+          item = item_row.to_hash
+          next if Item.exists? item
+          Item.create!(item)
+        end
+      end
+    end
   end
+
 
   unless Rails.env == 'production'
     desc 'Drop and setup the development database with examples'
