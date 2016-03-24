@@ -6,7 +6,7 @@ namespace :db do
   # end
   namespace :example do
     desc 'Fill all tables with example data'
-    task all: [:pokemon, :items]
+    task all: [:pokemon, :items, :sightings]
 
     desc 'Fill the pokemon table with example data'
     task pokemon: :environment do
@@ -27,6 +27,17 @@ namespace :db do
           item = item_row.to_hash
           next if Item.exists? item
           Item.create!(item)
+        end
+      end
+    end
+    desc 'Fill the sightings table with example data'
+    task sightings: :environment do
+      Sighting.transaction do
+        CSV.foreach(Rails.root + "data/sightings.csv",
+            headers: true) do |sighting_row|
+          sighting = sighting_row.to_hash
+          next if Sighting.exists? sighting
+          Sighting.create!(sighting)
         end
       end
     end
