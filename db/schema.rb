@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 20160323210538) do
   end
 
   create_table "sightings", force: :cascade do |t|
-    t.datetime "observation_time", null: false
-    t.string   "location",         null: false
+    t.datetime "observation_time"
+    t.string   "location"
     t.string   "observer"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
