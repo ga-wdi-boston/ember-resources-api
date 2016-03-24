@@ -42,13 +42,12 @@ ActiveRecord::Schema.define(version: 20160323210538) do
   end
 
   create_table "sightings", force: :cascade do |t|
-    t.date     "date",       null: false
-    t.time     "time",       null: false
-    t.string   "location",   null: false
+    t.datetime "observation_time", null: false
+    t.string   "location",         null: false
     t.string   "observer"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "pokemon_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "pokemon_id",       null: false
   end
 
   add_index "sightings", ["pokemon_id"], name: "index_sightings_on_pokemon_id", using: :btree
