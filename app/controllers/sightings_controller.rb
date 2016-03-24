@@ -6,7 +6,7 @@ class SightingsController < ApplicationController
     render json: Sighting.find(params[:id])
   end
   def create
-    @pokemon = Sighting.create!(sighting_params)
+    @sighting = Sighting.create!(sighting_params)
     if @sighting.save
       render json: @sighting, status: :created
     else
